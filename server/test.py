@@ -113,25 +113,27 @@ def test():
                     move.move(60, 'no', 'right', 0.6)
                     time.sleep(0.5)
                     move.motorStop()
+               
                 elif X >= 300 and X < 320:
-                    print('motor will move slight right')####move.motorStop()
-                    move.move(50, 'no', 'right', 0.6)
+                    print('motor will move slight left')####move.motorStop()
+                    move.move(40, 'no', 'left', 0.6)
                     time.sleep(0.5)
                     move.motorStop()
+                    
                 elif X > 320 and X <= 340:
-                    print('motor will move slight left')
-                    move.move(50, 'no', 'left', 0.6)
+                    print('motor will move slight right')
+                    move.move(40, 'no', 'right', 0.6)
                     time.sleep(0.5)
                     move.motorStop()   
                 elif X == 320:
                     print('lock in X')
                     X_lock = 1
                                     
-                    
-                
+                                    
+                                    
                 if X_lock == 1:
                     ultradata = ultra.checkdist()
-                    
+                    time.sleep(0.5) 
                     if ultradata > 0.1:
                         LED.colorWipe(255,16,0)
                         # move motor forward
