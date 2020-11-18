@@ -141,30 +141,24 @@ def destroy():
 
 
 if __name__ == '__main__':
+    dist = 0
     try:
         led = LED.LED()
         led.colorWipe(0,0,0)
         speed_set = 80
         setup()
-        ####print('Motor will move forward\n')
-        led.colorWipe(255,255,255)
-        ####move(speed_set, 'forward', 'no', 0.8)
-        ####time.sleep(1.3)
-        ####motorStop()
-        ####print('Motor will move backward\n')
-        ####move(speed_set, 'backward', 'no', 0.8)
-        ####time.sleep(1.3)
-
-        ####motorStop()
+        dist = ultra.checkdist()
+        print(f'Distance is {dist}')
         print('Motor will move right\n')
-        move(speed_set, 'no', 'right', 0.6)
-        time.sleep(1.3)
+        led.colorWipe(255,255,255)
+        move(speed_set, 'no', 'right', 0.8)
+        time.sleep(0.099)
         motorStop()
-        ####print('Motor will move left\n')
-        move(speed_set, 'no', 'right', 0.6)
-        time.sleep(1.3)
-        motorStop()
-        led.colorWipe(0,0,0)
+        #print('Motor will move right\n')
+        #move(speed_set, 'no', 'right', 0.8)
+        #time.sleep(1.3)
+        #motorStop()
+        
         dist = ultra.checkdist()
         print(f"Distance is {dist}")
         destroy()

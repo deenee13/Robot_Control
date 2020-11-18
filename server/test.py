@@ -18,6 +18,7 @@ from rpi_ws281x import *
 import move
 import numpy as np
 import ultra
+import sys
 
 pid = PID.PID()
 pid.SetKp(0.5)
@@ -104,56 +105,59 @@ def test():
                     print('Y_lock = 1 in it\n')
                 """
                 if X < (320-tor):
-                    print('motor will move left in X')####move.move(70, 'no', 'left', 0.6)
+                    print(f'motor will move left in X with value {X}')####move.move(70, 'no', 'left', 0.6)
                     move.move(60, 'no', 'left', 0.6)
                     time.sleep(0.5)
                     move.motorStop()
                 elif X > (320+tor):
-                    print('motor will move right in X')####move.move(70, 'no', 'right', 0.6)
+                    print(f'motor will move right in X with value {X}')####move.move(70, 'no', 'right', 0.6)
                     move.move(60, 'no', 'right', 0.6)
-                    time.sleep(0.5)
+                    time.sleep(0.3)
                     move.motorStop()
                
                 elif X >= 300 and X < 320:
-                    print('motor will move slight left')####move.motorStop()
+                    print(f'motor will move slight left with X value {X}')####move.motorStop()
                     move.move(40, 'no', 'left', 0.6)
-                    time.sleep(0.5)
+                    time.sleep(0.04)
                     move.motorStop()
                     
                 elif X > 320 and X <= 340:
-                    print('motor will move slight right')
+                    print(f'motor will move slight right with X value {X}')
                     move.move(40, 'no', 'right', 0.6)
-                    time.sleep(0.5)
+                    time.sleep(0.04)
                     move.motorStop()   
-                elif X == 320:
+                else:
                     print('lock in X')
                     X_lock = 1
                                     
                                     
                                     
                 if X_lock == 1:
-                    ultradata = ultra.checkdist()
-                    time.sleep(0.5) 
-                    if ultradata > 0.1:
-                        LED.colorWipe(255,16,0)
-                        # move motor forward
-                        print('motor will move forward')
-                        move.move(50, 'forward', 'no', 0.6)
-                        time.sleep(0.5)
-                        move.motorStop()
+                    while True:
+                        ultradata = ultra.checkdist()
+                        time.sleep(0.5) 
+                        if ultradata > 0.07:
+                            LED.colorWipe(255,16,0)
+                            # move motor forward
+                            print(f'motor will move forward and dist {ultradata}')
+                            move.move(30, 'forward', 'no', 0.6)
+                            time.sleep(0.5)
+                            move.motorStop()
+                            
+                        elif ultradata < 0.07:
+                            LED.colorWipe(0,16,255)
+                            # move motor backward
+                            print(f'motor will move backward and dist {ultradata}')
+                            move.move(30, 'backward', 'no', 0.6)
+                            time.sleep(0.5)
+                            move.motorStop()
                         
-                    elif ultradata < 0.1:
-                        LED.colorWipe(0,16,255)
-                        # move motor backward
-                        print('motor will move backward')
-                        move.move(50, 'backward', 'no', 0.6)
-                        time.sleep(0.5)
-                        move.motorStop()
-                    
-                    else:
-                        #stop the motor
-                        print('motor will stop')
-                        move.motorStop()
+                        else:
+                            #stop the motor
+                            print('motor will stop')
+                            move.motorStop()
+                            sys.exit()
+                            break
                 
             else:
                 cv2.putText(frame_image,'Target detecting',(40,60), font, 0.5,(255,0,0),1,cv2.LINE_AA)
