@@ -115,54 +115,101 @@ def test():
                     time.sleep(0.3)
                     move.motorStop()
                
-                elif X >= 300 and X < 320:
+                elif X >= 300 and X < 310:
                     print(f'motor will move slight left with X value {X}')####move.motorStop()
                     move.move(40, 'no', 'left', 0.6)
                     time.sleep(0.04)
+                    move.motorStop()
+
+                elif X >= 310 and X < 320:
+                    print(f'motor will move left with X value {X}')
+                    move.move(40, 'no', 'left', 0.6)
+                    time.sleep(0.02)
                     move.motorStop()
                     
                 elif X > 320 and X <= 340:
                     print(f'motor will move slight right with X value {X}')
                     move.move(40, 'no', 'right', 0.6)
+                    time.sleep(0.02)
+                    move.motorStop()
+
+                elif X > 330 and X <= 340:
+                    print(f'motore will move slight right with X value {X}')
+                    move.move(40, 'no', 'right', 0.6)
                     time.sleep(0.04)
-                    move.motorStop()   
+                    move.motorStop()
+
                 else:
                     print('lock in X')
                     X_lock = 1
                                     
                                     
                                     
-                if X_lock == 1:
-                    while True:
-                        ultradata = ultra.checkdist()
-                        time.sleep(0.5) 
-                        if ultradata > 0.07:
-                            LED.colorWipe(255,16,0)
-                            # move motor forward
-                            print(f'motor will move forward and dist {ultradata}')
-                            move.move(30, 'forward', 'no', 0.6)
-                            time.sleep(0.5)
-                            move.motorStop()
+                if X >= 317 and X <= 320:           #if X == 320:
+                    
+                    X_lock = 0
+                    ultradata = ultra.checkdist()
+                    time.sleep(0.5) 
+                    if ultradata >= 0.1:
+                        LED.colorWipe(255,16,0)
+                        # move motor forward
+                        print(f'motor will move forward and dist {ultradata}')
+                        move.move(30, 'forward', 'no', 0.6)
+                        time.sleep(0.30)
+                        move.motorStop()
+
+                    elif ultradata > 0.06 and ultradata < 0.1:
+                        LED.colorWipe(255,16,0)
+                        # move motor forward
+                        print(f'motor will move forward and dist {ultradata}')
+                        move.move(30, 'forward', 'no', '0.6')
+                        time.sleep(0.10)
+                        move.motorStop()
                             
-                        elif ultradata < 0.07:
-                            LED.colorWipe(0,16,255)
-                            # move motor backward
-                            print(f'motor will move backward and dist {ultradata}')
-                            move.move(30, 'backward', 'no', 0.6)
-                            time.sleep(0.5)
-                            move.motorStop()
+                    elif ultradata < 0.06:
+                        LED.colorWipe(0,16,255)
+                        # move motor backward
+                        print(f'motor will move backward and dist {ultradata}')
+                        move.move(30, 'backward', 'no', 0.6)
+                        time.sleep(0.10)
+                        move.motorStop()
                         
-                        else:
-                            #stop the motor
-                            print('motor will stop')
-                            move.motorStop()
-                            sys.exit()
-                            break
+                    else:
+                        #stop the motor
+                        print(f'motor will stop with dist {ultradata}')
+                        move.motorStop()
+                        sys.exit()
+                        break
                 
             else:
                 cv2.putText(frame_image,'Target detecting',(40,60), font, 0.5,(255,0,0),1,cv2.LINE_AA)
                 print('Servo motor is not rotating')
                 cv2.imshow('frame', frame_image)
+                '''
+                while 1:
+
+                    ultradata = ultra.checkdist()
+                    time.sleep(0.5)
+                    if ultradata > 0.06:
+                        LED.colorWipe(255,16,0)
+                        print(f'motor will move forward and dist {ultradata}')
+                        move.move(30, 'forward', 'no', 0.6)
+                        time.sleep(0.3)
+                        move.motorStop()
+
+                    elif ultradata < 0.06:
+                        LED.colorWipe(0, 16, 255)
+                        print(f'motor will move backward and dist {ultradata}')
+                        move.move(30, 'backward', 'no', 0.6)
+                        time.sleep(0.3)
+                        move.motorStop()
+
+                    else:
+                        print(f'motor will stop with dist {ultradata}')
+                        move.motorStop()
+                        sys.exit()
+                '''
+                ####cv2.imshow('frame', frame_image)
 
             for i in range(1, len(pts)):
                 if pts[i - 1] is None or pts[i] is None:

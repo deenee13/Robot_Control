@@ -149,19 +149,34 @@ if __name__ == '__main__':
         setup()
         dist = ultra.checkdist()
         print(f'Distance is {dist}')
-        print('Motor will move right\n')
+        '''
+        print('Motor will move forward\n')
         led.colorWipe(255,255,255)
-        move(speed_set, 'no', 'right', 0.8)
-        time.sleep(0.099)
+        move(speed_set, 'forward', 'no', 0.8)
+        time.sleep(1)
         motorStop()
-        #print('Motor will move right\n')
-        #move(speed_set, 'no', 'right', 0.8)
-        #time.sleep(1.3)
-        #motorStop()
+        ''' 
+        
+        print('Motor will move backward\n')
+        move(30, 'backward', 'no', 0.8)
+        time.sleep(1)
+        motorStop()
+        
+        '''
+        print('Motor will move right\n')
+        move(speed_set, 'no', 'right', 0.8)
+        time.sleep(1)
+        motorStop()
+
+        print('motor will move left\n')
+        move(speed_set, 'no', 'left', 0.8)
+        time.sleep(1)
+        motorStop()
         
         dist = ultra.checkdist()
         print(f"Distance is {dist}")
         destroy()
+        '''
     except KeyboardInterrupt:
         destroy()
 

@@ -3,22 +3,68 @@ import time
 
 
 
+def arm_down():
+    
+    print('Arm will go down\n')
+    H1_sc.singleServo(12, -1, 1)
+    H2_sc.singleServo(13, -1, 1)
+    time.sleep(7)
+    H1_sc.stopWiggle()
+    H2_sc.stopWiggle()
+
+def arm_gripper():
+    print('Gripper will Grab the ball\n')
+    G_sc.singleServo(15, 1, 1)
+    time.sleep(3)
+    G_sc.stopWiggle()
+
+def arm_up():
+    print('Arm will go up\n')
+    H1_sc.singleServo(12, 1, 3)
+    H2_sc.singleServo(13, 1, 3)
+    time.sleep(7)
+    H1_sc.stopWiggle()
+    H2_sc.stopWiggle()
+    
+def arm_normal_position():
+    print('Arm will go to normal position\n')
+    H1_sc.singleServo(12, -1, 1)
+    H2_sc.singleServo(13, -1, 1)
+    time.sleep(13)
+    H1_sc.stopWiggle()
+    H2_sc.stopWiggle()
+    
+    
+    
+
+
 def test():
 
-
-    print('Servo of gripper will rotate forward\n')
-    H1_sc.singleServo(12, -1, 2)
-    H2_sc.singleServo(13, -1, 2)
-    ##time.sleep(1)
-    H1.stopWiggle()
-    H2.stopWiggle()
+    arm_down()
+    arm_gripper()
+    arm_up()
+    arm_normal_position()
+    '''
+    print('Arm will go down\n')
+    H1_sc.singleServo(12, -1, 1)
+    H2_sc.singleServo(13, -1, 1)
+    time.sleep(7)
+    H1_sc.stopWiggle()
+    H2_sc.stopWiggle()
     
+    print('Gripper will Grab the ball\n')
+    G_sc.singleServo(15, 1, 1)
+    time.sleep(3)
+    G_sc.stopWiggle()
+    
+    print('Arm will go up\n')
+    H1_sc.singleServo(12, 1, 3)
+    H2_sc.singleServo(13, 1, 3)
+    time.sleep(7)
+    H1_sc.stopWiggle()
+    H2_sc.stopWiggle()
     '''
-    print('servo will rotate backward\n')
-    sc.singleServo(5, -1, 2)
-    time.sleep(1)
-    sc.stopWiggle()
-    '''
+    
     
 if __name__ == '__main__':
     
@@ -45,6 +91,7 @@ if __name__ == '__main__':
     # Instance to control pin 15 which is 5th motor(Gripper motor)
     G_sc = RPIservo.ServoCtrl()
     G_sc.start()
-
-    ###test()
+    
+    time.sleep(1)
+    test()
     ##time.sleep(0.09)
