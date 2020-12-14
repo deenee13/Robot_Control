@@ -1,8 +1,14 @@
+#!/usr/bin/env python3
+# File name   : servo_deep.py
+# Description : Servo Control Motor
+# Author      : Deepen Parmar(parmar@pdx.edu)
+# Date        : 2020/12/09
+
 import RPIservo
 import time
 
 
-
+# Algorithm to move arm down
 def arm_down():
     
     print('Arm will go down\n')
@@ -12,12 +18,14 @@ def arm_down():
     H1_sc.stopWiggle()
     H2_sc.stopWiggle()
 
+# Algorithm to move gripper
 def arm_gripper():
     print('Gripper will Grab the ball\n')
     G_sc.singleServo(15, 1, 1)
     time.sleep(3)
     G_sc.stopWiggle()
 
+# Algorithm to move arm up
 def arm_up():
     print('Arm will go up\n')
     H1_sc.singleServo(12, 1, 3)
@@ -26,6 +34,7 @@ def arm_up():
     H1_sc.stopWiggle()
     H2_sc.stopWiggle()
     
+# Initialse the servo motors
 def arm_normal_position():
     print('Arm will go to normal position\n')
     H1_sc.singleServo(12, -1, 1)
@@ -37,7 +46,7 @@ def arm_normal_position():
     
     
 
-
+# Calling all the functions in one
 def test():
 
     arm_down()

@@ -50,14 +50,21 @@ def test():
     tor = 20
     X_lock = 0
 
-
+    # Reading the values from the camera
     camera = picamera.PiCamera()
+    
+    # Resizing the resolution
     camera.resolution = (640, 480)
+    
+    # Setting the frame rate to 20
     camera.framerate = 20
     rawCapture = PiRGBArray(camera, size=(640, 480))
+    
+    # What color object to detect HSV upper and lower value of it
     colorUpper = (44, 255, 255)
     colorLower = (24, 100, 100)
-
+    
+    # for loop to continuous read the value from camera
     for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         frame_image = frame.array
         cv2.line(frame_image,(300,240),(340,240),(128,255,128),1)
@@ -67,10 +74,20 @@ def test():
         if FindColorMode:
 
             ####>>>OpenCV Start<<<####
+            
+            # Converting image to HSV color model
             hsv = cv2.cvtColor(frame_image, cv2.COLOR_BGR2HSV)
+            
+            # detecting the color which is in the object
             mask = cv2.inRange(hsv, colorLower, colorUpper)
+            
+            # performing te erosion operation
             mask = cv2.erode(mask, None, iterations=2)
+            
+            # perfroming the dilation operation
             mask = cv2.dilate(mask, None, iterations=2)
+            
+            # Getting the coordinates of the object from the enironment
             cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
                 cv2.CHAIN_APPROX_SIMPLE)[-2]
             center = None
@@ -104,6 +121,8 @@ def test():
                     Y_lock = 1
                     print('Y_lock = 1 in it\n')
                 """
+                
+                # Sccording to the coordnates deciding  which side to move and by how much delay
                 if X < (320-tor):
                     print(f'motor will move left in X with value {X}')####move.move(70, 'no', 'left', 0.6)
                     move.move(60, 'no', 'left', 0.6)

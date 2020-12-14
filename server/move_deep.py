@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-# File name   : move.py
+# File name   : move_deep.py
 # Description : Control Motor
-# Product     : GWR
-# Website     : www.gewbot.com
-# Author      : William
-# Date        : 2019/07/24
+# Author      : Deepen Parmar(parmar@pdx.edu)
+# Date        : 2020/12/09
+
 import time
 import RPi.GPIO as GPIO
 import LED
